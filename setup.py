@@ -15,7 +15,8 @@ setup(
     entry_points={
         'console_scripts': [
             'to_mp3 = aligner.mp3:main',
-            'transcribe = aligner.stt:main']},
+            'transcribe = aligner.stt:main',
+            'extract = aligner.transcriptions:main']},
     install_requires=[
         'PyYaml',
         'pandas',

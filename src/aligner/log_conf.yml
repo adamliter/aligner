@@ -21,3 +21,7 @@ loggers:
     handlers: [ch]
     propagate: false
     level: WARNING
+  aligner.transcriptions.TranscriptionExtractor:
+    handlers: [ch]
+    propagate: false
+    level: WARNING
