@@ -19,6 +19,7 @@ The package provides the following utilities:
 
 - `to_mp3`
 - `transcribe`
+- `extract`
 
 ### `to_mp3`
 
@@ -73,6 +74,19 @@ Now, you can use this utility like so:
 
 ``` sh
 transcribe -l info -f data/ibex_results/example_data_tidy_transcribed.csv -t Transcription -d data/ -m mp3_files -c /path/to/json/credentials/file.json -n 8
+```
+
+
+### `extract`
+
+To see help information, you can run `extract --help` after installing
+the package (and assuming the virtual environment into which you
+installed the package is active).
+
+Example usage:
+
+``` sh
+extract -l info -d data -f data/ibex_results/example_data_tidy_transcribed.csv -t Transcription -n
 ```
 
 
