@@ -9,17 +9,18 @@ logger = logging.getLogger(__name__)
 
 
 class WebmToMp3Converter:
-    def __init__(self, tidy_csv, mp3_dir, zip_dir):
+    def __init__(self, tidy_csv, mp3_dir, zip_dir, overwrite):
         self.logger = logger.getChild(self.__class__.__name__)
         self.tidy_csv = tidy_csv
         self.mp3_dir = mp3_dir
         self.zip_dir = zip_dir
+        self.overwrite = overwrite
 
     def convert_to_mp3(self):
         df = pd.read_csv(self.tidy_csv)
         groupings = df.groupby('Participant')
         for p, grp_df in groupings:
-            self.logger.info('Converting files for participant %(p)s.' %
+            self.logger.info('Working on data for participant %(p)s.' %
                              {'p': p})
             self.convert_and_cut(grp_df, self.mp3_dir, self.zip_dir)
 
@@ -42,21 +43,31 @@ class WebmToMp3Converter:
                     {'zf': zf})
                 for i, file_ in enumerate(grp_df['WebmFileName']):
 
-                    start_time = float(
-                        grp_df[grp_df['WebmFileName'] == file_]
-                        ['SecondsToStripFromFrontOfRecording'] *
-                        1000) + 500
-
                     mp3_name = os.path.join(
                         mp3_dir,
                         'item_number_' + str(i + 1).zfill(2) + '.mp3')
 
-                    with z.open(file_) as webm:
-                        sound = AudioSegment.from_file(webm)
-                        extracted_sound = sound[start_time:]
-                        extracted_sound.export(mp3_name, format='mp3')
-                        self.logger.info('Saved .mp3 file:\n%(mp3_name)s' %
-                                         {'mp3_name': mp3_name})
+                    if os.path.exists(mp3_name) and not self.overwrite:
+                        self.logger.info(
+                            'The .mp3 file, %(mp3_name)s, already exists. '
+                            'Skipping.' % {'mp3_name': mp3_name})
+
+                    elif os.path.exists(mp3_name) and self.overwrite:
+                        self.logger.info(
+                            'The .mp3 file, %(mp3_name)s, already exists. '
+                            'Overwriting.' % {'mp3_name': mp3_name})
+
+                    if not os.path.exists(mp3_name) or self.overwrite:
+                        start_time = float(
+                            grp_df[grp_df['WebmFileName'] == file_]
+                            ['SecondsToStripFromFrontOfRecording'] *
+                            1000) + 500
+                        with z.open(file_) as webm:
+                            sound = AudioSegment.from_file(webm)
+                            extracted_sound = sound[start_time:]
+                            extracted_sound.export(mp3_name, format='mp3')
+                            self.logger.info('Saved .mp3 file:\n%(mp3_name)s' %
+                                             {'mp3_name': mp3_name})
         except FileNotFoundError:
             self.logger.warning(
                 'Archive file %(zf)s for participant not found. Skipping' %
@@ -105,9 +116,25 @@ def main():
         'with the recordings.',
         dest='zip_dir')
 
+    parser.add_argument(
+        '--overwrite', '-o', action='store_true',
+        help='Recreates .mp3 files for all participants (the default). This is'
+        ' the default in case the amount of time to strip from the front of '
+        'the recording is changed.',
+        dest='overwrite')
+
+    parser.add_argument(
+        '--no-overwrite', '-n', action='store_false',
+        help='Only extracts .mp3 files for participants who don\'t yet have '
+        'any .mp3 files.',
+        dest='overwrite')
+
+    parser.set_defaults(overwrite=True)
+
     args = parser.parse_args()
 
-    converter = WebmToMp3Converter(args.file_, args.mp3_dir, args.zip_dir)
+    converter = WebmToMp3Converter(
+        args.file_, args.mp3_dir, args.zip_dir, args.overwrite)
 
     set_class_log_level(converter, args.log)
 
