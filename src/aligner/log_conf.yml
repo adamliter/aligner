@@ -1,0 +1,19 @@
+version: 1
+disable_existing_loggers: true
+formatters:
+  standard:
+    class: logging.Formatter
+    style: '{'
+    datefmt: '%Y-%m-$d %H:%M:%S'
+    format: '{asctime:s}::{levelname:s}::{name:s}: {message:s}'
+handlers:
+  ch:
+    level: DEBUG
+    class: logging.StreamHandler
+    formatter: standard
+    stream: ext://sys.stdout
+loggers:
+  aligner.mp3.WebmToMp3Converter:
+    handlers: [ch]
+    propagate: false
+    level: WARNING
