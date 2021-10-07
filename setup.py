@@ -14,9 +14,11 @@ setup(
         '': 'src', },
     entry_points={
         'console_scripts': [
-            'to_mp3 = aligner.mp3:main']},
+            'to_mp3 = aligner.mp3:main',
+            'transcribe = aligner.stt:main']},
     install_requires=[
         'PyYaml',
         'pandas',
         'pydub',
+        'google-cloud-speech',
     ])

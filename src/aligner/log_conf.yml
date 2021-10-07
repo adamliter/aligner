@@ -17,3 +17,7 @@ loggers:
     handlers: [ch]
     propagate: false
     level: WARNING
+  aligner.stt.SpeechToText:
+    handlers: [ch]
+    propagate: false
+    level: WARNING
