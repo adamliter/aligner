@@ -1,8 +1,8 @@
 <!-- -*- mode: gfm; fill-column: 72; coding: utf-8; -*- -->
 # aligner
 
-This is a Python package that provides varuous utilities for converting
-speceh to text, force aligning the transcription with the audio, and
+This is a Python package that provides various utilities for converting
+speech to text, force aligning the transcription with the audio, and
 extracting timing information for a linguistics production experiment
 that I'm conducting.
 
@@ -35,7 +35,7 @@ to_mp3 -l info -f data/ibex_results/example_data_tidy.csv -m data/mp3_files -z d
 
 ### `transcribe`
 
-To see help information, you can run `trascribe --help` after installing
+To see help information, you can run `transcribe --help` after installing
 the package (and assuming the virtual environment into which you
 installed the package is active).
 
@@ -93,3 +93,8 @@ extract -l info -d data -f data/ibex_results/example_data_tidy_transcribed.csv -
 <!-- Links -->
 [speech-to-text]: https://console.cloud.google.com/speech
 [serviceaccounts]: https://console.cloud.google.com/iam-admin/serviceaccounts
+
+
+<!-- Local Variables: -->
+<!--  LocalWords:  gfm utf imgs serviceaccounts json -->
+<!-- End: -->
