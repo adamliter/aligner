@@ -6,6 +6,26 @@ speech to text, force aligning the transcription with the audio, and
 extracting timing information for a linguistics production experiment
 that I'm conducting.
 
+## Overview
+
+The various utilities in this Python package are designed to work with
+some data wrangling and data analysis scripts that are not part of this
+repository. As such, the way that these utilities interact with the two
+different .csv files in the example `data` folder might seem somewhat
+idiosyncractic. Nonetheless, feel free to adapt this Python package for
+your own uses if you find it useful. See below for example usage as well
+as instructions for using Google Cloud's Speech-to-Text API and
+instructions for installing the forced aligner.
+
+I should also note that, while the `aligner.aligner.Aligner` class
+provides functionality for writing [Praat][praat] .TextGrid files, I do
+not make much use of these files myself, so there may be some
+undiscovered bugs in the code that generates those files.
+
+And one final note: this repository uses [Git LFS][git-lfs] to track
+binary files. In order to clone the repository, you will need to install
+it.
+
 ## Example usage
 
 After cloning the repository, you can install the package locally in a
@@ -36,9 +56,9 @@ to_mp3 -l info -f data/ibex_results/example_data_tidy.csv -m data/mp3_files -z d
 
 ### `transcribe`
 
-To see help information, you can run `transcribe --help` after installing
-the package (and assuming the virtual environment into which you
-installed the package is active).
+To see help information, you can run `transcribe --help` after
+installing the package (and assuming the virtual environment into which
+you installed the package is active).
 
 To use this utility, you will need a Google Cloud account. You can sign
 up for a free trial. After creating a Google Cloud account, navigate to
@@ -110,8 +130,9 @@ align -l info -f data/ibex_results/example_data_tidy_transcribed.csv -d data/ -m
 <!-- Links -->
 [speech-to-text]: https://console.cloud.google.com/speech
 [serviceaccounts]: https://console.cloud.google.com/iam-admin/serviceaccounts
-
 [gentle]: https://lowerquality.com/gentle/
+[praat]: https://www.fon.hum.uva.nl/praat/
+[git-lfs]: https://git-lfs.github.com/
 
 <!-- Local Variables: -->
 <!--  LocalWords:  gfm utf imgs serviceaccounts json -->
