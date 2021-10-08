@@ -20,6 +20,7 @@ The package provides the following utilities:
 - `to_mp3`
 - `transcribe`
 - `extract`
+- `align`
 
 ### `to_mp3`
 
@@ -73,7 +74,7 @@ Click the 'ADD KEY' dropdown and then click 'Create new key'. Add a
 Now, you can use this utility like so:
 
 ``` sh
-transcribe -l info -f data/ibex_results/example_data_tidy_transcribed.csv -t Transcription -d data/ -m mp3_files -c /path/to/json/credentials/file.json -n 8
+transcribe -l info -f data/ibex_results/example_data_tidy.csv -t Transcription -d data/ -m mp3_files -c /path/to/json/credentials/file.json -n 8
 ```
 
 
@@ -89,11 +90,28 @@ Example usage:
 extract -l info -d data -f data/ibex_results/example_data_tidy_transcribed.csv -t Transcription -n
 ```
 
+### `align`
+
+To see help information, you can run `align --help` after installing the
+package (and assuming the virtual environment into which you installed
+the package is active).
+
+In order for this utility to work, you must install the [Gentle forced
+aligner][gentle] and have it up and running on its default port, port
+8765.
+
+Example usage:
+
+``` sh
+align -l info -f data/ibex_results/example_data_tidy_transcribed.csv -d data/ -m mp3_files -t transcriptions -g gentle_align -o -p
+```
+
 
 <!-- Links -->
 [speech-to-text]: https://console.cloud.google.com/speech
 [serviceaccounts]: https://console.cloud.google.com/iam-admin/serviceaccounts
 
+[gentle]: https://lowerquality.com/gentle/
 
 <!-- Local Variables: -->
 <!--  LocalWords:  gfm utf imgs serviceaccounts json -->
