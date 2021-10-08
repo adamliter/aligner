@@ -25,3 +25,7 @@ loggers:
     handlers: [ch]
     propagate: false
     level: WARNING
+  aligner.aligner.Aligner:
+    handlers: [ch]
+    propagate: false
+    level: WARNING

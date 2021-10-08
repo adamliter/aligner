@@ -16,9 +16,11 @@ setup(
         'console_scripts': [
             'to_mp3 = aligner.mp3:main',
             'transcribe = aligner.stt:main',
-            'extract = aligner.transcriptions:main']},
+            'extract = aligner.transcriptions:main',
+            'align = aligner.aligner:main']},
     install_requires=[
         'PyYaml',
+        'numpy',
         'pandas',
         'pydub',
         'google-cloud-speech',
