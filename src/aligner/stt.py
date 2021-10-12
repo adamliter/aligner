@@ -1,5 +1,6 @@
 import os
 import io
+import logging
 import logging.config
 import pandas as pd
 from google.cloud import speech
