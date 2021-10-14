@@ -62,9 +62,17 @@ class SpeechToText:
                 self.logger.debug(
                     'Response from Google\'s Speech-to-Text service:\n'
                     '%(response)s' % {'response': response})
-                transcription = \
-                    response.results[0].alternatives[0].transcript\
-                                                       .capitalize() + '?'
+                if response.results:
+                    transcription = \
+                        response.results[0].alternatives[0].transcript\
+                                                           .capitalize() + '?'
+                else:
+                    self.logger.warning(
+                        'No audio detected for item number %(i)s for '
+                        'participant %(p)s.' %
+                        {'i': item,
+                         'p': p})
+                    transcription = 'Empty'
 
                 df.at[idx, self.transcription_col_name] = transcription
 
